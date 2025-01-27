@@ -1,0 +1,85 @@
+{
+  "Home": {
+    "Hero": {
+      "title": "Happiness",
+      "description": "Lorem Ipsum is placeholder text used in the printing and publishing industry.",
+      "actions": {
+        "orderNow": "Order Now",
+        "learnMore": "Learn More"
+      }
+    },
+
+    "BestSellers": {
+      "title": "Best Sellers"
+    }
+  },
+
+  "AboutUs": {
+    "title": "About Us",
+    "text1": "Hello, it is truly a pain that must be followed. Since all present things are discovered by some, they do not know what to follow, or we accuse them of hindering the comfort of things, and they are nothing; from the body, to gain a wise person, we do not choose it with truth, we accuse it, hinder it, or reproach it, because it rejects it with duties, associated with something other than the hardships, to follow those who enjoy. Pleasure. He rebukes the opening to seek the times that bless us, and follows the troubles of the praising ones, but he wants to keep some of their pleasures.",
+    "text2": "Thank you very much. Oh, because the error and pain will never be repeated, and the easy flexibility of every openness, the elders criticize this wise man more than anything else, so shouldn't it be assumed that there is nothing happy when great pleasures are unleashed? Do they provide the architect with some works that his distinction takes over here with pain, or the pleasure of choice? Their pleasures were resolved here even further. He was told he was released not out of flattery but out of necessity."
+  },
+
+  "ContactUs": {
+    "title": "Contact Us",
+    "name": {
+      "label": "Name",
+      "input": "Enter your name"
+    },
+    "email": {
+      "label": "Email",
+      "input": "Enter your email"
+    },
+    "message": {
+      "label": "Message",
+      "input": "Write your message"
+    }
+  },
+
+  "Cart": {
+    "title": "Cart",
+    "cartProducts": {
+      "size": "Size",
+      "empty": "Clear All",
+      "subTotal": "SubTotal",
+      "delivery": "Delivery",
+      "total": "Total"
+    },
+    "checkout": {
+      "title": "Checkout",
+      "phone": {
+        "label": "Phone",
+        "input": "Enter your phone"
+      },
+      "streetAddress": {
+        "label": "Street address",
+        "input": "Enter your street address"
+      },
+      "postalCode": {
+        "label": "Postal code",
+        "input": "Enter your postal code"
+      },
+      "city": {
+        "label": "City",
+        "input": "Enter your postal city"
+      },
+      "country": {
+        "label": "Country",
+        "input": "Enter your postal country"
+      },
+      "submit": {
+        "name": "Pay"
+      }
+    },
+    "catrEmpty": {
+      "title": "Cart is empty"
+    }
+  },
+
+  "Navigition": {
+    "menu": "Menu",
+    "about": "About",
+    "contact": "Contact",
+    "login": "login"
+  }
+}

@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  email         String         @unique
+  password      String
+  name          String
+  image         String?
+  phone         String?
+  streetAddress String?
+  postalCode    String?
+  city          String?
+  country       String?
+  // role          UserRole       @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  orders        OrderProduct[]
+  // accounts      Account[]
+  // sessions      Session[]
+}
+
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  description  String
+  image        String
+  order        Int
+  basePrice    Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  size         Size[]
+  extra        Extra[]
+  category   Category     @relation(fields: [categoriesId], references: [id])
+  categoriesId String
+  orderProduct OrderProduct[]
+}
+
+
+enum ProductSizes {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+model Size {
+  id        String       @id @default(cuid())
+  name      ProductSizes
+  price     Float
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+enum ProductExtras {
+  ONION
+  TOMATO
+  PEPPER
+}
+
+model Extra {
+  id        String        @id @default(cuid())
+  name      ProductExtras
+  price     Float
+  product   Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+}
+
+model Category {
+  id       String    @id @default(uuid())
+  name     String
+  order    Int       @default(autoincrement())
+  products Product[]
+}
+
+model Order {
+  id            String         @id @default(uuid())
+  paid          Boolean        @default(false)
+  subTotal      Float          @default(0.0)
+  deliveryFee   Float          @default(0.0)
+  totalPrice    Float          @default(0.0)
+  userEmail     String
+  phone         String
+  streetAddress String
+  postalCode    String
+  city          String
+  country       String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  product       OrderProduct[]
+}
+
+model OrderProduct {
+  id        String  @id @default(cuid())
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  user      User?   @relation(fields: [userId], references: [id])
+  userId    String?
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
