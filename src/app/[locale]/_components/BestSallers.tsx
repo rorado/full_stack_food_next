@@ -32,9 +32,8 @@ const BestSallers = async ({ translate }: Iprop) => {
         {bestSallers.map((item, idx) => (
           <div
             key={idx}
-            className="bg-secondary hover:bg-background px-4 py-6 rounded-xl w-full max-w-96 m-auto 
-            hover:drop-shadow-xl cursor-pointer transition-all duration-300 ease-in-out transform 
-            hover:-translate-y-1 hover:scale-105"
+            className="bg-gray-100 hover:bg-gray-50 px-4 py-6 rounded-xl w-full max-w-96 m-auto 
+            hover:drop-shadow-xl cursor-pointer duration-1000 ease-in-out "
           >
             <div className="min-h-[150px] flex">
               <Image

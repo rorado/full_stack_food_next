@@ -79,11 +79,10 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
     },
   });
 
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
   const selectedProductsId = React.useMemo(() => {
-    return table
-      .getFilteredSelectedRowModel()
-      .rows.map((row) => row.original.id);
-  }, [table.getFilteredSelectedRowModel().rows]);
+    return selectedRows.map((row) => row.original.id);
+  }, [selectedRows]);
 
   const handleDeletProducts = async () => {
     await productsDelet(selectedProductsId);

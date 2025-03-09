@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormControl, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Eye, EyeOff } from "lucide-react";

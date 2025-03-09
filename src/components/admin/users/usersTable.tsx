@@ -79,11 +79,11 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
     },
   });
 
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
+
   const selectedEmails = React.useMemo(() => {
-    return table
-      .getFilteredSelectedRowModel()
-      .rows.map((row) => row.original.email);
-  }, [table.getFilteredSelectedRowModel().rows]);
+    return selectedRows.map((row) => row.original.email);
+  }, [selectedRows]);
 
   const handleDeleteUsers = async () => {
     await usersDelet(selectedEmails);
