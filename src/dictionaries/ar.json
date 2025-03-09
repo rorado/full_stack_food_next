@@ -32,7 +32,8 @@
     "message": {
       "label": "الرسالة",
       "input": "أكتب رسالتك"
-    }
+    },
+    "submit": "ارسال الرسالة"
   },
 
   "Cart": {
@@ -44,7 +45,6 @@
       "delivery": "التوصيل",
       "total": "الإجمالي"
     },
-
     "checkout": {
       "title": "إتمام الشراء",
       "phone": {
@@ -71,16 +71,143 @@
         "name": "ادفع"
       }
     },
-
     "catrEmpty": {
       "title": "عربة التسوق فارغة"
     }
   },
-
   "Navigition": {
     "menu": "القائمة",
     "about": "حول",
     "contact": "اتصل",
-    "login": "تسجيل الدخول"
+    "login": "تسجيل الدخول",
+    "register": "اشتراك",
+    "profile": "ملف التعريف",
+    "admin": "المشرف"
+  },
+  "Auth": {
+    "login": {
+      "title": "مرحبًا بعودتك",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "submit": "تسجيل الدخول",
+      "authPrompt": {
+        "message": "ليس لديك حساب؟ ",
+        "signUpLinkText": "سجل الآن"
+      }
+    },
+    "register": {
+      "title": "إنشاء حساب",
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور"
+      },
+      "confirmPassword": {
+        "label": "تأكيد كلمة المرور",
+        "placeholder": "أعد إدخال كلمة المرور"
+      },
+      "submit": "إنشاء حساب",
+      "authPrompt": {
+        "message": "هل لديك حساب؟ ",
+        "loginLinkText": "تسجيل الدخول"
+      }
+    }
+  },
+  "Validation": {
+    "nameRequired": "الاسم مطلوب",
+    "validEmail": "يجب أن يكون بريد إلكتروني صالح",
+    "passwordMinLength": "يجب أن تكون كلمة المرور على الأقل 6 أحرف",
+    "passwordMaxLength": "يجب أن تكون كلمة المرور على الأكثر 40 حرفًا",
+    "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+    "passwordMismatch": "كلمة المرور غير متطابقة"
+  },
+  "Messages": {
+    "userNotFound": "المستخدم غير موجود",
+    "incorrectPassword": "كلمة المرور غير صحيحة",
+    "incorrectIdentifier": "الحقول خاطئة",
+    "loginSuccessful": "تم تسجيل الدخول بنجاح",
+    "unexpectedError": "حدث خطأ غير متوقع",
+    "userAlreadyExists": "المستخدم موجود بالفعل",
+    "accountCreated": "تم إنشاء الحساب بنجاح",
+    "updateProfileSucess": "تم تحديث الملف الشخصي بنجاح",
+    "categoryAdded": "تم اضافة الفئة بنجاح",
+    "updatecategorySucess": "تم تحديث الفئة بنجاح",
+    "deleteCategorySucess": "تم حذف الفئة بنجاح",
+    "productAdded": "تم اضافة المنتج بنجاح",
+    "updateProductSucess": "تم تحديث المنتج بنجاح",
+    "deleteProductSucess": "تم حذف المنتج بنجاح",
+    "updateUserSucess": "تم تحديث المستخدم بنجاح",
+    "deleteUserSucess": "تم حذف المستخدم بنجاح"
+  },
+  "Profile": {
+    "title": "الملف الشخصي",
+    "form": {
+      "name": {
+        "label": "الاسم",
+        "placeholder": "أدخل اسمك",
+        "validation": {
+          "required": "يجب أن يحتوي الاسم على الأقل ثلاث أحرف"
+        }
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "phone": {
+        "label": "رقم الهاتف",
+        "placeholder": "أدخل رقم هاتفك",
+        "validation": {
+          "required": "رقم الهاتف مطلوب",
+          "invalid": "يرجى إدخال رقم هاتف صالح"
+        }
+      },
+      "address": {
+        "label": "عنوان الشارع",
+        "placeholder": "أدخل عنوانك",
+        "validation": {
+          "required": "العنوان مطلوب"
+        }
+      },
+      "postalCode": {
+        "label": "الرمز البريدي",
+        "placeholder": "أدخل الرمز البريدي",
+        "validation": {
+          "required": "الرمز البريدي مطلوب",
+          "invalid": "يرجى إدخال رمز بريدي صالح"
+        }
+      },
+      "city": {
+        "label": "المدينة",
+        "placeholder": "أدخل مدينتك",
+        "validation": {
+          "required": "المدينة مطلوبة"
+        }
+      },
+      "country": {
+        "label": "الدولة",
+        "placeholder": "أدخل دولتك",
+        "validation": {
+          "required": "الدولة مطلوبة"
+        }
+      }
+    },
+    "submit": "إرسال"
   }
 }

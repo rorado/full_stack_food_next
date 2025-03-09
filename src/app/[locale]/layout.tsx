@@ -6,6 +6,10 @@ import Footer from "@/components/footer/Footer";
 import ReduxProvider from "@/providers/ReduxProvider";
 import { Locale } from "@/i18n.config";
 import { Directions, Languages } from "@/constants/enum";
+import { Toaster } from "@/components/ui/toaster";
+import SessionProvider from "@/providers/SessionProvider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,19 +30,24 @@ export default async function RootLayout({
   params: Promise<{ locale: Locale }>;
 }>) {
   const locale = (await params).locale;
+  const session = await getServerSession(authOptions);
+
   return (
     <html
       lang={locale}
       dir={locale == Languages.ARABIC ? Directions.RTL : Directions.LTR}
     >
       <body className={roboto.className}>
-        <ReduxProvider>
-          <div className="min-h-[100vh] flex flex-col">
-            <Header />
-            <div className="mt-5 flex-1">{children}</div>
-            <Footer />
-          </div>
-        </ReduxProvider>
+        <SessionProvider session={session}>
+          <ReduxProvider>
+            <div className="min-h-[100vh] flex flex-col">
+              <Header />
+              <div className="mt-5 flex-1">{children}</div>
+              <Toaster />
+              <Footer />
+            </div>
+          </ReduxProvider>
+        </SessionProvider>
       </body>
     </html>
   );

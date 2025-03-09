@@ -70,7 +70,7 @@ const CheckoutForm = ({ translate }: Iprop) => {
 
           <FormItem>
             <FormLabel>
-              {translate.streetAddress.label}{" "}
+              {translate.streetAddress.label}
               <span className="text-[red]">*</span>
             </FormLabel>
             <FormControl>

@@ -5,7 +5,7 @@ import { Routes } from "@/constants/enum";
 import { useSelector } from "react-redux";
 import { selectCartItem } from "@/reduxt/features/cart/cartSlice";
 
-const CatButton = () => {
+const CartButton = () => {
   const cart = useSelector(selectCartItem);
   return (
     <Link href={Routes.CART}>
@@ -22,4 +22,4 @@ const CatButton = () => {
   );
 };
 
-export default CatButton;
+export default CartButton;

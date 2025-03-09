@@ -1,7 +1,7 @@
 import { cache } from "@/lib/cache";
 import { db } from "@/lib/prisma";
 
-export const getProductsByCategory = cache(
+export const categories = cache(
   () => {
     const productCategory = db.category.findMany({
       include: {

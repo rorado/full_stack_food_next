@@ -1,5 +1,6 @@
 import { RootState } from "@/reduxt/store";
-import { Extra, Size } from "@prisma/client";
+import { ProductType } from "@/types/TypesModuls";
+import { Extra } from "@prisma/client";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type cartItem = {
@@ -8,7 +9,7 @@ export type cartItem = {
   image?: string;
   basePrice: number;
   quantity: number;
-  size?: Size;
+  size?: ProductType["size"];
   extra?: Extra[];
 };
 

@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { formatCurrency } from "../../../utils/formatCurrency";
-import { Extra, Size } from "@prisma/client";
+import { Extra } from "@prisma/client";
 import { useAppDispatch, useAppSelector } from "@/reduxt/hooks";
 import {
   addProductToCart,
@@ -17,14 +17,16 @@ import {
 } from "@/reduxt/features/cart/cartSlice";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { findProductInCart } from "@/lib/cart";
+import { ProductType } from "@/types/TypesModuls";
 
 interface Iprop {
   id: string;
   imageSrc: string;
   title: string;
-  description: string;
+  description: string | null;
   basePrice: number;
-  sizes: Size[];
+  sizes: ProductType["size"][];
+  sizeLable: ProductType["size"];
   extras: Extra[];
 }
 
@@ -35,9 +37,11 @@ const AddToCardButton = ({
   description,
   basePrice,
   sizes,
+  sizeLable,
   extras,
 }: Iprop) => {
-  const [selectedSize, setSelectedSize] = useState<Size>(sizes[0]);
+  const [selectedSize, setSelectedSize] =
+    useState<ProductType["size"]>(sizeLable);
   const [selectedExtras, setSelectedExtras] = useState<Extra[]>([]);
   const cart = useAppSelector(selectCartItem);
 
@@ -96,7 +100,7 @@ const AddToCardButton = ({
       title={
         <div>
           <Image
-            src={imageSrc}
+            src={imageSrc ?? "/assets/default-product.png"}
             alt={title}
             width={150}
             height={150}
@@ -105,22 +109,20 @@ const AddToCardButton = ({
           <Title title={title} size="lg" styles="text-center" />
         </div>
       }
-      description={description}
+      description={description || ""}
     >
       <div className="space-y-2">
         <Title size="md" title="Pick your size" styles="text-center" />
         <RadioGroup value={selectedSize.name}>
-          {sizes.map((item: Size, idx) => (
+          {sizes.map((item, idx) => (
             <div
               key={idx}
               className="flex items-center space-x-2 border p-2 cursor-pointer"
-              onClick={() => {
-                setSelectedSize(item);
-              }}
+              onClick={() => setSelectedSize(item)}
             >
               <RadioGroupItem value={item.name} id={`size-${idx}`} />
               <Label htmlFor={`size-${idx}`} className="cursor-pointer text-lg">
-                {item.name} +({formatCurrency(item.price)})
+                {item.name} + ({formatCurrency(item.price)})
               </Label>
             </div>
           ))}

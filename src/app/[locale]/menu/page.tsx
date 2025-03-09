@@ -1,15 +1,17 @@
 import Title from "@/components/titles";
-import { getProductsByCategory } from "@/server/db/categories";
 import { formatCurrency } from "@/utils/formatCurrency";
 import Image from "next/image";
 import AddToCardButton from "../_components/AddToCardButton";
+import { categoryByProduct } from "@/server/db/productsByCategories";
+import { getSizes } from "@/server/db/sizes";
 
 const Menu = async () => {
-  const categories = await getProductsByCategory();
+  const products = await categoryByProduct();
+  const sizes = await getSizes();
   // console.log(categories);
   return (
     <main>
-      {categories.map((caterory, idx) => {
+      {products.map((caterory, idx) => {
         return (
           <section key={idx} className="section-gap">
             <div>
@@ -22,11 +24,12 @@ const Menu = async () => {
                 <div
                   key={idx}
                   className="bg-secondary hover:bg-background px-4 py-6 rounded-xl w-full max-w-96 m-auto 
-            hover:drop-shadow-xl hover:mt-[-5px] cursor-pointer transition-transform duration-500"
+                  hover:drop-shadow-xl cursor-pointer transition-all duration-300 ease-in-out transform 
+                  hover:-translate-y-1 hover:scale-105"
                 >
-                  <div>
+                  <div className="min-h-[150px] flex">
                     <Image
-                      src={item.image}
+                      src={item.image ?? "/assets/default-product.png"}
                       alt={item.name}
                       width={150}
                       height={150}
@@ -45,10 +48,11 @@ const Menu = async () => {
                         {item.description}
                       </p>
                       <AddToCardButton
+                        sizeLable={item.size!}
                         id={item.id}
                         extras={item.extra}
-                        sizes={item.size}
-                        imageSrc={item.image}
+                        sizes={sizes}
+                        imageSrc={item.image ?? "/assets/default-product.png"}
                         title={item.name}
                         description={item.description}
                         basePrice={item.basePrice}

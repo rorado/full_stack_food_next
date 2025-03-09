@@ -25,6 +25,7 @@ interface Iprop {
       label: string;
       input: string;
     };
+    submit: string;
   };
 }
 
@@ -104,7 +105,7 @@ const ContactPage = ({ translate }: Iprop) => {
           </FormItem>
 
           <Button className="mt-5 w-full" type="submit">
-            Submit
+            {translate.submit}
           </Button>
         </form>
       </FormProvider>

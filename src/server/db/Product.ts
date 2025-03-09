@@ -1,16 +1,17 @@
 import { cache } from "@/lib/cache";
 import { db } from "@/lib/prisma";
 
-export const getBestProduct = cache(
+export const getProduct = cache(
   () => {
     const bestSallers = db.product.findMany({
       include: {
         size: true,
         extra: true,
+        category: true,
       },
     });
     return bestSallers;
   },
-  ["best_selers"],
+  ["get_product"],
   { revalidate: 60 }
 );

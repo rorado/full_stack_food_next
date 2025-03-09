@@ -33,7 +33,8 @@
     "message": {
       "label": "Message",
       "input": "Write your message"
-    }
+    },
+    "submit": "Submit"
   },
 
   "Cart": {
@@ -80,6 +81,135 @@
     "menu": "Menu",
     "about": "About",
     "contact": "Contact",
-    "login": "login"
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "admin": "Admin"
+  },
+  "Auth": {
+    "login": {
+      "title": "Welcome Back",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "submit": "Login",
+      "authPrompt": {
+        "message": "Don't have an account? ",
+        "signUpLinkText": "Sign Up"
+      }
+    },
+    "register": {
+      "title": "Register",
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Re-enter your password"
+      },
+      "submit": "Register",
+      "authPrompt": {
+        "message": "Already have an account? ",
+        "loginLinkText": "Login"
+      }
+    }
+  },
+  "Validation": {
+    "nameRequired": "Name is required",
+    "validEmail": "Must be a valid email",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "passwordMaxLength": "Password must be at most 40 characters",
+    "confirmPasswordRequired": "Confirm Password is required",
+    "passwordMismatch": "Password do not match"
+  },
+  "Messages": {
+    "userNotFound": "User not found",
+    "incorrectPassword": "Incorrect password",
+    "incorrectIdentifier": "fields is wrong",
+    "loginSuccessful": "Login successful",
+    "unexpectedError": "An unexpected error occurred",
+    "userAlreadyExists": "User already exists.",
+    "accountCreated": "Account created successfully",
+    "updateProfileSucess": "Profile updated successfull",
+    "categoryAdded": "Category added successfully",
+    "updatecategorySucess": "Category updated successfull",
+    "deleteCategorySucess": "Category deleted successfull",
+    "productAdded": "Product added successfully",
+    "updateProductSucess": "Product updated successfull",
+    "deleteProductSucess": "Product deleted successfull",
+    "updateUserSucess": "User updated successfull",
+    "deleteUserSucess": "User deleted successfull"
+  },
+  "Profile": {
+    "title": "Profile",
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Enter your name",
+        "validation": {
+          "required": "name must be at least 3 characters"
+        }
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Enter your email"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Enter your phone number",
+        "validation": {
+          "required": "Phone number is required",
+          "invalid": "Please enter a valid phone number"
+        }
+      },
+      "address": {
+        "label": "Street Address",
+        "placeholder": "Enter your address",
+        "validation": {
+          "required": "Address is required"
+        }
+      },
+      "postalCode": {
+        "label": "Postal Code",
+        "placeholder": "Enter your postal code",
+        "validation": {
+          "required": "Postal code is required",
+          "invalid": "Please enter a valid postal code"
+        }
+      },
+      "city": {
+        "label": "City",
+        "placeholder": "Enter your city",
+        "validation": {
+          "required": "City is required"
+        }
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Enter your country",
+        "validation": {
+          "required": "Country is required"
+        }
+      }
+    },
+    "submit": "Submit"
   }
 }

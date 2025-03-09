@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -9,46 +8,79 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { RevalidatePath } from "@/lib/revalidePath";
+import { ReactNode, useState } from "react";
+import { Button } from "../ui/button";
 
 interface Iprop {
   title: string;
-  descreption: string;
-  buttonAction: React.ReactNode;
-  handleSave: () => void;
+  descreption?: string;
+  buttonAction?: React.ReactNode;
+  children?: ReactNode;
+  handeSave: () => Promise<void> | void;
+  pathRev?: string;
 }
 
 export function AlertDialogDemo({
   title,
   descreption,
   buttonAction,
-  handleSave,
+  children,
+  handeSave,
+  pathRev,
 }: Iprop) {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleToggle = () => {
-    setOpen(!open);
+  const revalidatePath = async () => {
+    try {
+      if (pathRev) {
+        await RevalidatePath(pathRev);
+      }
+    } catch {
+      alert("Unexpected Error");
+    }
   };
-  const handleAction = () => {
-    setOpen(!open);
-    handleSave();
+
+  const handleAction = async () => {
+    setLoading(true);
+    try {
+      await handeSave();
+      await revalidatePath();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+    setOpen(false);
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div onClick={handleToggle}> {buttonAction}</div>
+        <div onClick={() => setOpen(true)}>{buttonAction}</div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{descreption}</AlertDialogDescription>
+          {children ? (
+            children
+          ) : (
+            <AlertDialogDescription>{descreption}</AlertDialogDescription>
+          )}
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="hover:bg-slate-100">
+          <AlertDialogCancel
+            className="hover:bg-slate-100"
+            onClick={() => setOpen(false)}
+            disabled={loading}
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleAction}>Delet</AlertDialogAction>
+          <Button onClick={handleAction} disabled={loading}>
+            {loading ? "Processing..." : "Ok"}
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

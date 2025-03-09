@@ -2,7 +2,8 @@ import Image from "next/image";
 import { formatCurrency } from "../../../utils/formatCurrency";
 import Title from "@/components/titles";
 import AddToCardButton from "./AddToCardButton";
-import { getBestProduct } from "@/server/db/Product";
+import { ProductType } from "@/types/TypesModuls";
+import { getProduct } from "@/server/db/Product";
 
 interface Iprop {
   translate: {
@@ -11,7 +12,13 @@ interface Iprop {
 }
 
 const BestSallers = async ({ translate }: Iprop) => {
-  const bestSallers = await getBestProduct();
+  const bestSallers = await getProduct();
+  const res = await fetch("http://localhost:3000/api/product/size");
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch sizes");
+  }
+  const sizes: ProductType["size"][] = await res.json();
 
   return (
     <section className="section-gap">
@@ -21,16 +28,17 @@ const BestSallers = async ({ translate }: Iprop) => {
           {translate.title}
         </h2>
       </div>
-      <div className="container flex gap-10 flex-wrap w-full mt-9">
+      <div className="container flex gap-10 items-center flex-wrap w-full mt-9">
         {bestSallers.map((item, idx) => (
           <div
             key={idx}
             className="bg-secondary hover:bg-background px-4 py-6 rounded-xl w-full max-w-96 m-auto 
-            hover:drop-shadow-xl hover:mt-[-5px] cursor-pointer transition-transform duration-500"
+            hover:drop-shadow-xl cursor-pointer transition-all duration-300 ease-in-out transform 
+            hover:-translate-y-1 hover:scale-105"
           >
-            <div>
+            <div className="min-h-[150px] flex">
               <Image
-                src={item.image}
+                src={item.image ?? "/assets/default-product.png"}
                 alt={item.name}
                 width={150}
                 height={150}
@@ -49,10 +57,11 @@ const BestSallers = async ({ translate }: Iprop) => {
                   {item.description}
                 </p>
                 <AddToCardButton
+                  sizeLable={item.size as ProductType["size"]}
                   id={item.id}
                   extras={item.extra}
-                  sizes={item.size}
-                  imageSrc={item.image}
+                  sizes={sizes}
+                  imageSrc={item.image!}
                   title={item.name}
                   description={item.description}
                   basePrice={item.basePrice}

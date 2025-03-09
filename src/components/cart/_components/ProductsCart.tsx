@@ -52,7 +52,7 @@ const ProductsCart = ({ translate }: Iprop) => {
       {cart.length > 0 ? (
         <div className="mb-14">
           <AlertDialogDemo
-            handleSave={handleCleareCart}
+            handeSave={() => handleCleareCart()}
             buttonAction={
               <Button>
                 {translate.empty} <Trash2 size={19} />
@@ -80,7 +80,11 @@ const ProductsCart = ({ translate }: Iprop) => {
                 <div className="text-[#979696de] flex justify-between">
                   <p>
                     {translate.size}
-                    <span className="ml-1 lowercase first-letter:uppercase font-[800]">
+                    <span
+                      className={`m${
+                        isRtl ? "r" : "l"
+                      }-1 lowercase first-letter:uppercase font-[800]`}
+                    >
                       {item.size?.name}
                     </span>
                   </p>
@@ -88,12 +92,12 @@ const ProductsCart = ({ translate }: Iprop) => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center ">
-              <h2 className={`text-xl font-[700] m${isRtl ? "l" : "r"}-2`}>
+            <div className="flex items-center gap-6">
+              <h2 className="text-xl font-[700]">
                 {formatCurrency(item.basePrice * item.quantity)}
               </h2>
               <AlertDialogDemo
-                handleSave={handleRemoveproductCart(item.id)}
+                handeSave={handleRemoveproductCart(item.id)}
                 buttonAction={
                   <div className="bg-[#e0e0e0de] p-1.5 cursor-pointer w-fit rounded-full">
                     <Trash2 size={19} />

@@ -1,100 +1,168 @@
 "use client";
+
 import { Pages, Routes } from "@/constants/enum";
-import Link from "../../link";
 import { Button } from "../../ui/button";
 import { AlignJustify, X } from "lucide-react";
 import { useState } from "react";
 import { useParams, usePathname } from "next/navigation";
+import CartButton from "./CartButton";
+import LanguageSwitcher from "./languageSwitcher";
+import { signOut } from "next-auth/react";
+import { Session } from "next-auth";
+import { useCLientSession } from "@/hooks/useCLientSession";
+import { Translations } from "@/types/translations";
+import Link from "next/link";
 
-interface Iprop {
-  translate: {
-    menu: string;
-    about: string;
-    contact: string;
-    login: string;
-  };
+interface NavbarProps {
+  translate: Translations["Navigition"];
+  initialSession: Session | null;
 }
 
-const Navbar = ({ translate }: Iprop) => {
+const Navbar = ({ translate, initialSession }: NavbarProps) => {
+  const { data: session } = useCLientSession(initialSession);
   const { locale } = useParams();
   const pathname = usePathname();
+  const [openNav, setOpenNav] = useState(false);
 
-  const links = [
-    { href: Routes.MENU, title: translate.menu },
-    { href: Routes.ABOUT, title: translate.about },
-    { href: Routes.CONTACT, title: translate.contact },
-    { href: `${Routes.AUTH}/${Pages.LOGIN}`, title: translate.login },
+  const toggleNav = () => setOpenNav((prev) => !prev);
+
+  const navLinks = [
+    { href: `/${locale}/${Routes.MENU}`, title: translate.menu },
+    { href: `/${locale}/${Routes.ABOUT}`, title: translate.about },
+    { href: `/${locale}/${Routes.CONTACT}`, title: translate.contact },
+    ...(session
+      ? [{ href: `/${locale}/${Routes.PROFILE}`, title: translate.profile }]
+      : []),
+    ...(session?.user?.role == "ADMIN"
+      ? [{ href: `/${locale}/${Routes.ADMIN}`, title: translate.admin }]
+      : []),
   ];
 
-  const [openNav, setOpenNav] = useState(false);
-  const toogleNav = () => {
-    setOpenNav((prev) => !prev);
-  };
-
-  const Icon = openNav ? X : AlignJustify;
-
   return (
-    <div>
-      {/* large screens*/}
-      <ul className="hidden lg:flex gap-8 items-center">
-        {links.map((item, idx) => (
-          <li key={idx}>
+    <nav>
+      {/* Large screens */}
+      <div className="flex w-full items-center">
+        <div className="flex-1 flex justify-center">
+          <ul className="hidden lg:flex gap-8 items-center">
+            {navLinks.map(({ href, title }) => (
+              <li key={href}>
+                <Link
+                  href={href}
+                  className={`text-[21px] hover:text-primary ${
+                    pathname.startsWith(href)
+                      ? "text-primary underline"
+                      : "text-gray-800"
+                  }`}
+                >
+                  {title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {session?.user ? (
+          <div className="hidden lg:block">
+            <Button
+              className="rounded-full h-10 text-[20px] px-6 py-2"
+              onClick={() =>
+                signOut({ callbackUrl: `/${locale}`, redirect: true })
+              }
+            >
+              signOut
+            </Button>
+          </div>
+        ) : (
+          <div className="hidden lg:flex gap-3 items-center">
             <Link
-              href={`${item.href}`}
+              href={`/${locale}/${Routes.AUTH}/${Pages.LOGIN}`}
               className={`text-[21px] hover:text-primary ${
-                pathname.startsWith(`/${locale}/${item.href}`)
+                pathname === `/${locale}/${Routes.AUTH}/${Pages.LOGIN}`
                   ? "text-primary underline"
-                  : "text-accent"
+                  : "text-gray-800"
               }`}
             >
-              {item.href == `${Routes.AUTH}/${Pages.LOGIN}` ? (
-                <Button className="rounded-full h-10 text-[20px] px-6 py-2">
-                  {item.title}
-                </Button>
-              ) : (
-                <div>{item.title}</div>
-              )}
+              {translate.login}
             </Link>
-          </li>
-        ))}
-      </ul>
+            <Link href={`/${locale}/${Routes.AUTH}/${Pages.Register}`}>
+              <Button className={`rounded-full h-10 text-[20px] px-6 py-2`}>
+                {translate.register}
+              </Button>
+            </Link>
+          </div>
+        )}
 
-      <Button
-        onClick={toogleNav}
-        className="lg:hidden cursor-pointer rounded-full"
-      >
-        <Icon />
-      </Button>
-      {/* small screens */}
+        <CartButton />
+
+        <Button
+          onClick={toggleNav}
+          className="lg:hidden cursor-pointer rounded-full mx-3 hover:bg-primary-foreground"
+        >
+          {openNav ? <X /> : <AlignJustify />}
+        </Button>
+
+        <div className="hidden lg:flex gap-2">
+          <LanguageSwitcher />
+        </div>
+      </div>
+
+      {/* Small screens */}
       <div
-        className={` fixed right-0 top-18 h-[100vh] min-w-full
-		    lg:hidden ${openNav ? "translate-y-0" : "translate-y-[-200vw]"}
-     	transition-transform duration-500 bg-background -z-40`}
+        className={`fixed right-0 top-18 h-[100vh] w-full lg:hidden 
+          ${openNav ? "translate-y-0" : "-translate-y-full"} 
+          transition-transform duration-500 bg-background -z-40`}
       >
         <ul className="mt-20 flex flex-col gap-8 items-center">
-          {links.map((item, idx) => (
-            <li key={idx} className="mt-3">
+          {navLinks.map(({ href, title }) => (
+            <li key={href} className="mt-3">
               <Link
-                href={`${item.href}`}
+                href={href}
                 className={`text-[21px] hover:text-primary ${
-                  pathname.startsWith(`/${locale}/${item.href}`)
-                    ? "text-primary underline"
-                    : "text-accent"
+                  pathname === href ? "text-primary underline" : ""
                 }`}
+                onClick={toggleNav}
               >
-                {item.href == `${Routes.AUTH}/${Pages.LOGIN}` ? (
-                  <Button className="rounded-full text-[20px] px-6 py-2">
-                    {item.title}
-                  </Button>
-                ) : (
-                  <div>{item.title}</div>
-                )}
+                {title}
               </Link>
             </li>
           ))}
         </ul>
+
+        {session?.user ? (
+          <div className="flex justify-center items-center">
+            <Button
+              className="rounded-full h-10 text-[20px] px-6 py-2"
+              onClick={() => signOut()}
+            >
+              signOut
+            </Button>
+          </div>
+        ) : (
+          <div className="flex lg:hidden flex-col gap-3 items-center my-4">
+            <Link
+              href={`/${locale}/${Routes.AUTH}/${Pages.LOGIN}`}
+              className={`text-[21px] hover:text-primary ${
+                pathname === `/${locale}/${Routes.AUTH}/${Pages.LOGIN}`
+                  ? "text-primary underline"
+                  : ""
+              }`}
+              onClick={toggleNav}
+            >
+              {translate.login}
+            </Link>
+            <Link
+              href={`/${locale}/${Routes.AUTH}/${Pages.Register}`}
+              onClick={toggleNav}
+            >
+              <Button className={`rounded-full h-10 text-[20px] px-6 py-2`}>
+                {translate.register}
+              </Button>
+            </Link>
+          </div>
+        )}
+        <LanguageSwitcher />
       </div>
-    </div>
+    </nav>
   );
 };
 

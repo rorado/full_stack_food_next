@@ -9,9 +9,6 @@ const LanguageSwitcher = () => {
   const pathname = usePathname();
   const { locale } = useParams();
 
-  console.log("patname:", pathname);
-  console.log("local:", locale);
-
   const switchLanguage = (newLocale: string) => {
     const path =
       pathname?.replace(`/${locale}`, `/${newLocale}`) ?? `/${newLocale}`;
@@ -19,7 +16,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex mx-2">
+    <div className="flex mx-2 justify-center">
       {locale === Languages.ARABIC ? (
         <Button
           variant="outline"
