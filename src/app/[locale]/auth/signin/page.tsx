@@ -21,7 +21,7 @@ async function Signin() {
         </div>
         <Signin_form translate={translation} locale={locale} />
         <div>
-          <p className="mt-2 text-accent  text-sm">
+          <p className="mt-2 text-accent text-sm text-gray-500">
             {translation.Auth.login.authPrompt.message}
             <Link
               href={`/${locale}/${Routes.AUTH}/${Pages.Register}`}

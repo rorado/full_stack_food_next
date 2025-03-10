@@ -22,7 +22,7 @@ async function SingIn() {
         <SignupForm translate={translation} />
 
         <div>
-          <p className="mt-2 text-accent  text-sm">
+          <p className="mt-2 text-accent text-sm text-gray-500">
             {translation.Auth.register.authPrompt.message}
             <Link
               href={`/${locale}/${Routes.AUTH}/${Pages.LOGIN}`}
