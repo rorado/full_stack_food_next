@@ -1,21 +1,8 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/page";
 import Footer from "@/components/footer/Footer";
-import ReduxProvider from "@/providers/ReduxProvider";
-import { Locale } from "@/i18n.config";
-import { Directions, Languages } from "@/constants/enum";
 import { Toaster } from "@/components/ui/toaster";
-import SessionProvider from "@/providers/SessionProvider";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/server/auth";
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  preload: true,
-});
 
 export const metadata: Metadata = {
   title: "Pizza",
@@ -24,31 +11,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
 }>) {
-  const locale = (await params).locale;
-  const session = await getServerSession(authOptions);
-
   return (
-    <html
-      lang={locale}
-      dir={locale == Languages.ARABIC ? Directions.RTL : Directions.LTR}
-    >
-      <body className={roboto.className}>
-        <SessionProvider session={session}>
-          <ReduxProvider>
-            <div className="min-h-[100vh] flex flex-col">
-              <Header />
-              <div className="mt-5 flex-1">{children}</div>
-              <Toaster />
-              <Footer />
-            </div>
-          </ReduxProvider>
-        </SessionProvider>
-      </body>
-    </html>
+    <div className="min-h-[100vh] flex flex-col">
+      <Header />
+      <div className="mt-5 flex-1">{children}</div>
+      <Toaster />
+      <Footer />
+    </div>
   );
 }
