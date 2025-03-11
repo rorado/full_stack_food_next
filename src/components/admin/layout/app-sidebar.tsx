@@ -70,16 +70,16 @@ export function AppSidebar({ locale }: Iprop) {
                     <SidebarMenuButton
                       asChild
                       className={
-                        pathname.startsWith(`/${locale}${item.url}`)
+                        pathname.startsWith(`/${locale}/${item.url}`)
                           ? "bg-primary text-white hover:bg-primary-hover hover:text-white"
                           : ""
                       }
                     >
-                      <Link href={item.url}>
+                      <Link href={`/${locale}/${item.url}`}>
                         <item.icon />
                         <span
                           className={
-                            pathname.startsWith(`/${locale}${item.url}`)
+                            pathname.startsWith(`/${locale}/${item.url}`)
                               ? ""
                               : ""
                           }

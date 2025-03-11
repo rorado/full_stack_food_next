@@ -1,6 +1,7 @@
 import Link from "@/components/link";
 import { Button } from "@/components/ui/button";
 import { Routes } from "@/constants/enum";
+import { Locale } from "@/i18n.config";
 import { Forward } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -14,9 +15,10 @@ interface Iprop {
       learnMore: string;
     };
   };
+  locale: Locale;
 }
 
-const Hero = ({ translate }: Iprop) => {
+const Hero = ({ translate, locale }: Iprop) => {
   return (
     <section
       className="container section-gap flex flex-col-reverse lg:flex-row 
@@ -30,14 +32,14 @@ const Hero = ({ translate }: Iprop) => {
           {translate.description}
         </p>
         <div className="flex gap-5 items-center justify-center lg:justify-start">
-          <Link href={Routes.MENU}>
+          <Link href={`${locale}/${Routes.MENU}`}>
             <Button className="rounded-full">
               {translate.actions.orderNow}
               <Forward />
             </Button>
           </Link>
           <Link
-            href={Routes.ABOUT}
+            href={`${locale}/${Routes.ABOUT}`}
             className="flex gap-1 font-roboto font-[600] text-xl item-center cursor-pointer"
           >
             <h2>{translate.actions.learnMore}</h2> <Forward />
