@@ -13,7 +13,9 @@ interface Iprop {
 
 const BestSallers = async ({ translate }: Iprop) => {
   const bestSallers = await getProduct();
-  const res = await fetch("http://localhost:3000/api/product/size");
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/size`
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch sizes");

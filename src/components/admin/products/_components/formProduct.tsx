@@ -114,17 +114,17 @@ const ProductForm = ({ product }: Iprop) => {
   const currentbasePrice = Number(watch("basePrice")) + priceProductwithEx;
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/product/categories")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`)
       .then((res) => res.json())
       .then((data) => {
         setCategories(data);
       });
 
-    fetch("http://localhost:3000/api/product/extras")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/extras`)
       .then((res) => res.json())
       .then((data) => setextras(data || "don't find extra"));
 
-    fetch("http://localhost:3000/api/product/size")
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/size`)
       .then((res) => res.json())
       .then((data) => setSizes(data));
   }, []);

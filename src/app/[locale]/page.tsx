@@ -12,7 +12,6 @@ export default async function Home() {
   const { Home, AboutUs, ContactUs } = await getTrans(locale);
   return (
     <div>
-      <h1 className="text-2xl mt-48">{}</h1>
       <Hero translate={Home.Hero} />
       <BestSallers translate={Home.BestSellers} />
       <AboutPage translate={AboutUs} />
