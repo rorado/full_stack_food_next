@@ -30,6 +30,7 @@ export default async function RootLayout({
   params: Promise<{ locale: Locale }>;
 }>) {
   const locale = (await params).locale;
+  console.log(locale);
   const session = await getServerSession(authOptions);
   return (
     <html

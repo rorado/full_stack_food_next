@@ -60,7 +60,9 @@ export default withAuth(
     );
 
     if (pathname === `/${currentLocale}/${Routes.ADMIN}`) {
-      return NextResponse.redirect(new URL("/admin/users", request.url));
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${Routes.ADMIN}/${Pages.USERS}`, request.url)
+      );
     }
 
     const previousUrl =

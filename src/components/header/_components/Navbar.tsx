@@ -34,7 +34,12 @@ const Navbar = ({ translate, initialSession }: NavbarProps) => {
       ? [{ href: `/${locale}/${Routes.PROFILE}`, title: translate.profile }]
       : []),
     ...(session?.user?.role == "ADMIN"
-      ? [{ href: `/${locale}/${Routes.ADMIN}`, title: translate.admin }]
+      ? [
+          {
+            href: `/${locale}/${Routes.ADMIN}/${Pages.USERS}`,
+            title: translate.admin,
+          },
+        ]
       : []),
   ];
 
