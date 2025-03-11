@@ -19,7 +19,7 @@ const Header = async () => {
       >
         <div className="flex justify-between shadow-inner h-full py-5 px-3 bg-background">
           <Link
-            href={Routes.ROOT}
+            href={`${Routes.ROOT}${locale}`}
             className="text-3xl m-0 text-primary font-[900] font-serif"
           >
             🍕 Pizza
