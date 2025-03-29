@@ -29,8 +29,7 @@ const Hero = ({ translate, locale }: Iprop) => {
           {translate.title}
         </h2>
         <p className="text-[#424242] my-6 text-center lg:text-start max-w-[600px]">
-          {/* { translate.description} */}
-          test 55
+          {translate.description}
         </p>
         <div className="flex gap-5 items-center justify-center lg:justify-start">
           <Link href={`${locale}/${Routes.MENU}`}>
