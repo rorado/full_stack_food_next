@@ -12,7 +12,6 @@ const Header = async () => {
   const { Navigition } = await getTrans(locale);
   return (
     <header>
-      {/* <NextAuthSessionProvider> */}
       <div
         className="container fixed z-50 bg-background 
           top-0 left-1/2 transform -translate-x-1/2"
