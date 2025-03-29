@@ -26,7 +26,8 @@ const Hero = ({ translate, locale }: Iprop) => {
     >
       <div className="m-auto lg:m-0">
         <h2 className="font-roboto font-[700] text-4xl text-center lg:text-start">
-          {translate.title}
+          {/* {translate.title} */}
+          testo
         </h2>
         <p className="text-[#424242] my-6 text-center lg:text-start max-w-[600px]">
           {translate.description}
