@@ -64,7 +64,6 @@ export const addOrEditProduct = async (
   IsCreate: boolean
 ) => {
   const session = await getServerSession(authOptions);
-
   console.log(formData);
 
   const categoriesId = formData.category.map((val) => ({ id: val.id }));

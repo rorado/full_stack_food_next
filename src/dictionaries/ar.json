@@ -209,5 +209,67 @@
       }
     },
     "submit": "إرسال"
+  },
+  "Admin": {
+    "User": {
+      "title": "المستخدمون",
+      "columns": "الأعمدة",
+      "filter_emails": "تصفية البريد الإلكتروني",
+      "table": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "role": "الدور",
+        "create": "إنشاء",
+        "ctr_next": "التالي",
+        "ctr_prev": "السابق",
+        "of": "من",
+        "row": "صف(وف)",
+        "selected": "محدد",
+        "actions": {
+          "name": "الإجراءات",
+          "delet_user": "حذف المستخدم",
+          "edit_user": "تعديل المستخدم"
+        }
+      }
+    },
+    "Products": {
+      "title": "المنتجات",
+      "columns": "الأعمدة",
+      "filter_name": "تصفية الاسم",
+      "table": {
+        "name": "الاسم",
+        "description": "الوصف",
+        "price": "السعر",
+        "create": "إنشاء",
+        "ctr_next": "التالي",
+        "ctr_prev": "السابق",
+        "of": "من",
+        "row": "صف(وف)",
+        "selected": "محدد",
+        "actions": {
+          "name": "الإجراءات",
+          "copy_ID": "نسخ",
+          "delet_product": "حذف المنتج",
+          "edit_product": "تعديل المنتج"
+        }
+      }
+    },
+    "Categories": {
+      "title": "الفئات",
+      "Columns": {
+        "name": "الاسم",
+        "number_of_product": "عدد المنتجات"
+      },
+      "filter_name": "تصفية الاسم",
+      "table": {
+        "name": "الاسم",
+        "number_of_product": "عدد المنتجات",
+        "actions": {
+          "name": "الإجراءات",
+          "copy_ID": "نسخ",
+          "delet_category": "حذف الفئة"
+        }
+      }
+    }
   }
 }

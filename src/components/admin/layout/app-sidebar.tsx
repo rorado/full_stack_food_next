@@ -12,7 +12,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,48 +19,48 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LanguageType } from "@/i18n.config";
-
-// Menu items.
-const items = [
-  {
-    title: "Users",
-    url: "/admin/users",
-    icon: Users,
-  },
-  {
-    title: "Products",
-    url: "/admin/products",
-    icon: PackageSearch,
-  },
-  {
-    title: "Categories",
-    url: "/admin/categories",
-    icon: ChartBarStacked,
-  },
-  // {
-  //   title: "Menu items",
-  //   url: "/admin/menuitems",
-  //   icon: SquareMenu,
-  // },
-  // {
-  //   title: "Orders",
-  //   url: "/admin/orders",
-  //   icon: ListOrdered,
-  // },
-];
+import { Translations } from "@/types/translations";
 
 interface Iprop {
   locale: LanguageType;
+  translate: Translations;
 }
 
-export function AppSidebar({ locale }: Iprop) {
+export function AppSidebar({ locale, translate }: Iprop) {
   const pathname = usePathname();
+
+  const items = [
+    {
+      title: translate.Admin.User.title,
+      url: "/admin/users",
+      icon: Users,
+    },
+    {
+      title: translate.Admin.Products.title,
+      url: "/admin/products",
+      icon: PackageSearch,
+    },
+    {
+      title: translate.Admin.Categories.title,
+      url: "/admin/categories",
+      icon: ChartBarStacked,
+    },
+    // {
+    //   title: "Menu items",
+    //   url: "/admin/menuitems",
+    //   icon: SquareMenu,
+    // },
+    // {
+    //   title: "Orders",
+    //   url: "/admin/orders",
+    //   icon: ListOrdered,
+    // },
+  ];
 
   return (
     <Sidebar className="section-gap" side={locale == "ar" ? "right" : "left"}>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => {

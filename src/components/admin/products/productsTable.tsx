@@ -58,8 +58,15 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [revalidateLoading, setRevalidateLoading] = React.useState(false);
 
-  const columns = getColumnsProduct({ locale, translate });
+  const admin_product_types = translate.Admin.Products;
+  const columns = getColumnsProduct({ locale, translate: admin_product_types });
 
+  const columnNames = {
+    name: admin_product_types.table.name,
+    description: admin_product_types.table.description,
+    price: admin_product_types.table.price,
+    createdAt: admin_product_types.table.create,
+  };
   const table = useReactTable({
     data,
     columns,
@@ -127,7 +134,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
       </div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter name..."
+          placeholder={`${admin_product_types.filter_name} ...`}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -142,7 +149,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
                 locale == "ar" ? "mr-auto" : "ml-auto"
               } ml-auto outline-0`}
             >
-              Columns <ChevronDown />
+              {admin_product_types.columns} <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -159,7 +166,8 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {columnNames[column.id as keyof typeof columnNames] ||
+                      column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -219,8 +227,10 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length}{" "}
+          {admin_product_types.table.of}
+          {table.getFilteredRowModel().rows.length}
+          {admin_product_types.table.row} {admin_product_types.table.selected}.
         </div>
         <div className="space-x-2">
           <Button
@@ -229,7 +239,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {admin_product_types.table.ctr_prev}
           </Button>
           <Button
             variant="outline"
@@ -237,7 +247,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {admin_product_types.table.ctr_next}
           </Button>
         </div>
       </div>

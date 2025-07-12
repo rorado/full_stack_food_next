@@ -23,7 +23,7 @@ import { userData } from "@/types/TypesModuls";
 
 interface Iprop {
   locale: Locale;
-  translate: Translations;
+  translate: Translations["Admin"]["User"];
 }
 
 export const getColumnsUsers = ({
@@ -59,7 +59,7 @@ export const getColumnsUsers = ({
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: translate.table.name,
     cell: ({ row }) => (
       <div className={`${locale === "ar" ? "text-left" : ""} capitalize`}>
         {row.getValue("name")}
@@ -74,7 +74,7 @@ export const getColumnsUsers = ({
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          {translate.table.email}
           <ArrowUpDown />
         </Button>
       );
@@ -87,7 +87,7 @@ export const getColumnsUsers = ({
   },
   {
     accessorKey: "role",
-    header: "Role",
+    header: translate.table.role,
     cell: ({ row }) => (
       <div className={`${locale === "ar" ? "text-left" : ""} capitalize`}>
         {row.getValue("role")}
@@ -98,7 +98,7 @@ export const getColumnsUsers = ({
     accessorKey: "createdAt",
     header: () => (
       <div className={`${locale === "ar" ? "text-left" : "text-right"}`}>
-        Created
+        {translate.table.create}
       </div>
     ),
     cell: ({ row }) => {
@@ -136,7 +136,9 @@ export const getColumnsUsers = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align={`${locale === "ar" ? "start" : "end"}`}>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {translate.table.actions.name}
+            </DropdownMenuLabel>
             {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(userData.id)}
             >
@@ -150,7 +152,7 @@ export const getColumnsUsers = ({
               }}
               buttonAction={
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  Delet user
+                  {translate.table.actions.delet_user}
                 </DropdownMenuItem>
               }
               title="Are you shure you want to delete this user"
@@ -163,13 +165,13 @@ export const getColumnsUsers = ({
                     e.preventDefault();
                   }}
                 >
-                  Edit user
+                  {translate.table.actions.edit_user}{" "}
                 </DropdownMenuItem>
               }
             >
               <ProfileForm
                 userUpdate={userData as User}
-                translate={translate["Profile"]}
+                // translate={translate["Profile"]}
               />
             </DrawerDialogDemo>
           </DropdownMenuContent>

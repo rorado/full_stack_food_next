@@ -211,5 +211,68 @@
       }
     },
     "submit": "Submit"
+  },
+
+  "Admin": {
+    "User": {
+      "title": "Users",
+      "columns": "Columns",
+      "filter_emails": "filter emails",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "create": "Create",
+        "ctr_next": "Next",
+        "ctr_prev": "Previous",
+        "of": "of",
+        "row": "row(s)",
+        "selected": "selected",
+        "actions": {
+          "name": "Actions",
+          "delet_user": "Delete user",
+          "edit_user": "Edite user"
+        }
+      }
+    },
+    "Products": {
+      "title": "Product",
+      "columns": "Columns",
+      "filter_name": "filter name",
+      "table": {
+        "name": "Name",
+        "description": "Descrption",
+        "price": "Price",
+        "create": "Create",
+        "ctr_next": "Next",
+        "ctr_prev": "Previous",
+        "of": "of",
+        "row": "row(s)",
+        "selected": "selected",
+        "actions": {
+          "name": "Actions",
+          "copy_ID": "copy",
+          "delet_product": "Delete product",
+          "edit_product": "Edite product"
+        }
+      }
+    },
+    "Categories": {
+      "title": "Categories",
+      "Columns": {
+        "name": "name",
+        "number_of_product": "number of product"
+      },
+      "filter_name": "filter name",
+      "table": {
+        "name": "name",
+        "number_of_product": "number of product",
+        "actions": {
+          "name": "Actions",
+          "copy_ID": "copy",
+          "delet_category": "Delete category"
+        }
+      }
+    }
   }
 }

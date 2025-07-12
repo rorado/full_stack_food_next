@@ -57,7 +57,6 @@ const deleteCategory = async (id: string) => {
 
 export const getColumnsProduct = ({
   locale,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   translate,
 }: Iprop): ColumnDef<CategoriesType>[] => [
   {
@@ -89,7 +88,7 @@ export const getColumnsProduct = ({
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: translate?.Admin.Categories.table.name,
     cell: ({ row }) => (
       <div className={`${locale === "ar" ? "text-left" : ""} capitalize`}>
         {row.getValue("name")}
@@ -97,9 +96,12 @@ export const getColumnsProduct = ({
     ),
   },
   {
-    accessorKey: "productsNumber",
+    accessorKey: "number of product",
     header: () => (
-      <div className="w-[200px] text-center">Number of product</div>
+      <div className="w-[200px] text-center">
+        {" "}
+        {translate?.Admin.Categories.table.number_of_product}
+      </div>
     ),
     cell: ({ row }) => (
       <div className="text-center w-[200px]">
@@ -127,11 +129,13 @@ export const getColumnsProduct = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align={`${locale === "ar" ? "start" : "end"}`}>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {translate?.Admin.Categories.table.actions.name}
+            </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(category.name)}
             >
-              Copy category name
+              {translate?.Admin.Categories.table.actions.copy_ID}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <AlertDialogDemo
@@ -143,7 +147,7 @@ export const getColumnsProduct = ({
                     e.preventDefault();
                   }}
                 >
-                  Delet category
+                  {translate?.Admin.Categories.table.actions.delet_category}
                 </DropdownMenuItem>
               }
               title="Are you shure you want to delete this category"

@@ -69,6 +69,13 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
 
   const columns = getColumnsProduct({ locale, translate });
 
+  const category_types = translate.Admin.Categories;
+
+  const columnNames = {
+    name: category_types.table.name,
+    "number of product": category_types.table.number_of_product,
+  };
+
   const table = useReactTable({
     data,
     columns,
@@ -104,7 +111,7 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
       </div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter name..."
+          placeholder={`${category_types.filter_name} ...`}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
@@ -119,7 +126,7 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
                 locale == "ar" ? "mr-auto" : "ml-auto"
               } ml-auto outline-0`}
             >
-              Columns <ChevronDown />
+              {category_types.title} <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -136,7 +143,8 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {columnNames[column.id as keyof typeof columnNames] ||
+                      column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -196,8 +204,11 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
 
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+          {table.getFilteredSelectedRowModel().rows.length}{" "}
+          {translate.Admin.User.table.of}{" "}
+          {table.getFilteredRowModel().rows.length}{" "}
+          {translate.Admin.User.table.row} {translate.Admin.User.table.selected}
+          .
         </div>
         <div className="space-x-2">
           <Button
@@ -206,7 +217,7 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {translate.Admin.User.table.ctr_prev}
           </Button>
           <Button
             variant="outline"
@@ -214,7 +225,7 @@ export function DataTableCategories({ data, locale, translate }: Iprop) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {translate.Admin.User.table.ctr_next}
           </Button>
         </div>
       </div>

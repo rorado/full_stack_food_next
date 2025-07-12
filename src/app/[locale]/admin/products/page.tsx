@@ -13,7 +13,7 @@ const page = async () => {
     <section className="w-full">
       <div>
         <h2 className="text-primary text-center text-3xl font-[700]">
-          Products
+          {translate.Admin.Products.title}
         </h2>
       </div>
       <div className="mx-5">

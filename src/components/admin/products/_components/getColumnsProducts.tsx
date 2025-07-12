@@ -24,12 +24,11 @@ import { Pages, Routes } from "@/constants/enum";
 
 interface Iprop {
   locale: Locale;
-  translate?: Translations;
+  translate?: Translations["Admin"]["Products"];
 }
 
 export const getColumnsProduct = ({
   locale,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   translate,
 }: Iprop): ColumnDef<ProductType>[] => [
   {
@@ -61,7 +60,7 @@ export const getColumnsProduct = ({
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: translate?.table.name,
     cell: ({ row }) => (
       <div className={`${locale === "ar" ? "text-left" : ""} capitalize`}>
         {row.getValue("name")}
@@ -70,9 +69,13 @@ export const getColumnsProduct = ({
   },
   {
     accessorKey: "description",
-    header: "Description",
+    header: translate?.table.description,
     cell: ({ row }) => (
-      <div className={`${locale === "ar" ? "text-left" : ""} capitalize`}>
+      <div
+        className={`${
+          locale === "ar" ? "text-left" : ""
+        } capitalize truncate-paragraph-2 max-w-20 lg:max-w-30`}
+      >
         {row.getValue("description")}
       </div>
     ),
@@ -87,7 +90,7 @@ export const getColumnsProduct = ({
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="w-full"
         >
-          Price
+          {translate?.table.price}
           <ArrowUpDown />
         </Button>
       );
@@ -96,26 +99,29 @@ export const getColumnsProduct = ({
       <div className="text-center capitalize">{row.getValue("price")}</div>
     ),
   },
-  // {
-  //   accessorKey: "price",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button
-  //         variant="ghost"
-  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //         className="w-full"
-  //       >
-  //         price
-  //         <ArrowUpDown />
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => {
-  //     const date: Date = row.getValue("price");
-  //     const formatted = date.toLocaleDateString("en-US");
-  //     return <div className="text-center">{formatted}</div>;
-  //   },
-  // },
+  {
+    accessorKey: "createdAt",
+    header: () => (
+      <div className={`${locale === "ar" ? "text-left" : "text-right"}`}>
+        {translate?.table.create}
+      </div>
+    ),
+    cell: ({ row }) => {
+      const raw: Date = row.getValue("createdAt");
+      const date = new Date(raw);
+      const formatted = date.toLocaleDateString("en-US");
+
+      return (
+        <div
+          className={`${
+            locale === "ar" ? "text-left" : "text-right"
+          } font-medium`}
+        >
+          {formatted}
+        </div>
+      );
+    },
+  },
   {
     id: "actions",
     enableHiding: false,
@@ -135,11 +141,13 @@ export const getColumnsProduct = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align={`${locale === "ar" ? "start" : "end"}`}>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {translate?.table.actions.name}
+            </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(productData.id)}
             >
-              Copy productData ID
+              {translate?.table.actions.copy_ID}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <AlertDialogDemo
@@ -153,7 +161,7 @@ export const getColumnsProduct = ({
                     e.preventDefault();
                   }}
                 >
-                  Delet product
+                  {translate?.table.actions.delet_product}
                 </DropdownMenuItem>
               }
               title="Are you shure you want to delete this product"
@@ -167,7 +175,7 @@ export const getColumnsProduct = ({
                     e.preventDefault();
                   }}
                 >
-                  Edit product
+                  {translate?.table.actions.edit_product}
                 </DropdownMenuItem>
               }
             >

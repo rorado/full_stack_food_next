@@ -74,13 +74,6 @@ export const authOptions: NextAuthOptions = {
         postalCode: dbUser.postalCode,
         streetAddress: dbUser.streetAddress,
       };
-      // if (user) {
-      //   token.id = user.id; // تعيين `id` من `user`
-      //   token.name = user.name as string;
-      //   token.email = user.email;
-      //   token.role = user.role as UserRole; // تعيين `role`
-      // }
-      // return token;
     },
   },
   session: {

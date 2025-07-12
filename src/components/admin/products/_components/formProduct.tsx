@@ -45,19 +45,22 @@ const ProductForm = ({ product }: Iprop) => {
   const [extras, setextras] = useState<ProductType["extra"] | string>([]);
   const [sizes, setSizes] = useState<ProductType["size"][]>();
 
-  const [priceProductwithEx, setpriceProduct] = useState<number>(0);
-
   const [selectedCategoriesValues, setSelectedCategoriesValues] = useState<
     ProductType["category"] | string
   >(categoriesProduct.map((val: any) => val));
 
   const [selectedExttraValues, setSelectedExttraValues] = useState<
-    ProductType["extra"] | string
+    ProductType["extra"] | null
   >(extrasProduct.map((val) => val));
 
   const [selectedSizeValues, setSelectedSizeValues] = useState<
     ProductType["size"] | null
   >(size ?? null);
+
+  const prices_EX_Si =
+    (selectedExttraValues
+      ? selectedExttraValues.reduce((sum, item) => sum + item.price, 0)
+      : 0) + (selectedSizeValues ? selectedSizeValues.price : 0);
 
   const toggleCategorySelection = (value: { id: string; name: string }) => {
     setSelectedCategoriesValues((prev) => {
@@ -68,12 +71,12 @@ const ProductForm = ({ product }: Iprop) => {
       return [];
     });
   };
+
   const toggleExtrasSelection = (value: {
     id: string;
     name: string;
     price: number;
   }) => {
-    const { price } = value;
     setSelectedExttraValues((prev) => {
       if (Array.isArray(prev)) {
         const exist = prev.some((val) => val.id === value.id);
@@ -82,19 +85,14 @@ const ProductForm = ({ product }: Iprop) => {
           ? prev.filter((v) => v.id !== value.id)
           : [...prev, value];
 
-        setpriceProduct((prevPrice) =>
-          prev.includes(value) ? prevPrice - price : prevPrice + price
-        );
-
         return newSelect;
       }
       return [];
     });
   };
+
   const toggleSizeSelection = (value: ProductType["size"]) => {
-    const { price } = value;
     setSelectedSizeValues(value);
-    setpriceProduct((prev) => prev + price);
   };
 
   const methods = useForm({
@@ -111,7 +109,7 @@ const ProductForm = ({ product }: Iprop) => {
     formState: { errors },
   } = methods;
 
-  const currentbasePrice = Number(watch("basePrice")) + priceProductwithEx;
+  const currentbasePrice = Number(watch("basePrice"));
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`)
@@ -128,13 +126,6 @@ const ProductForm = ({ product }: Iprop) => {
       .then((res) => res.json())
       .then((data) => setSizes(data));
   }, []);
-
-  useEffect(() => {
-    const priceExtras = Array.isArray(selectedExttraValues)
-      ? selectedExttraValues.reduce((acc, curr) => acc + curr.price, 0)
-      : 0;
-    setpriceProduct(priceExtras + (size?.price ?? 0));
-  }, [selectedExttraValues, size]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -164,7 +155,7 @@ const ProductForm = ({ product }: Iprop) => {
         ...data,
         id: product?.id,
         image: currentImage,
-        price: priceProductwithEx + Number(data.basePrice),
+        price: prices_EX_Si + Number(data.basePrice),
         basePrice: Number(data.basePrice),
         order: 50,
         category: selectedCategoriesValues,
@@ -290,9 +281,12 @@ const ProductForm = ({ product }: Iprop) => {
               )}
             />
 
-            <div className="flex gap-2">
+            <div className="flex gap-2 ">
               <h3>total price: </h3>
-              <p>{formatCurrency(currentbasePrice)}</p>
+              <p className="text-xl">{formatCurrency(currentbasePrice)}</p>
+              <p className="text-lg text-gray-700">
+                + ({formatCurrency(prices_EX_Si)})
+              </p>
             </div>
 
             <div className="flex justify-between flex-wrap">
@@ -314,7 +308,10 @@ const ProductForm = ({ product }: Iprop) => {
                             key={value.id}
                             onClick={() => toggleCategorySelection(value)}
                           >
-                            <div className="flex justify-between px-4 py-2 border-gray-200 border-b-2">
+                            <div
+                              className="flex justify-between px-4 py-2 border-gray-200 border-b-2 
+                              cursor-pointer hover:bg-slate-200"
+                            >
                               {value.name}
                               {typeof selectedCategoriesValues !== "string"
                                 ? selectedCategoriesValues.some(
@@ -347,9 +344,15 @@ const ProductForm = ({ product }: Iprop) => {
                             key={value.id}
                             onClick={() => toggleExtrasSelection(value)}
                           >
-                            <div className="flex justify-between px-4 py-2 border-gray-200 border-b-2">
+                            <div
+                              className="flex justify-between px-4 py-2 border-gray-200 border-b-2 
+                              cursor-pointer hover:bg-slate-200"
+                            >
                               {value.name}
-                              {typeof selectedExttraValues !== "string"
+                              <p className="font-mono text-sm text-gray-500">
+                                ( + {formatCurrency(value.price)})
+                              </p>
+                              {selectedExttraValues
                                 ? selectedExttraValues.some(
                                     (val) => val.id == value.id
                                   ) && <Check className="h-4 w-4" />
@@ -379,8 +382,14 @@ const ProductForm = ({ product }: Iprop) => {
                             key={value.id}
                             onClick={() => toggleSizeSelection(value)}
                           >
-                            <div className="flex justify-between px-4 py-2 border-gray-200 border-b-2">
+                            <div
+                              className="flex justify-between px-4 py-2 border-gray-200 border-b-2 
+                              cursor-pointer hover:bg-slate-200"
+                            >
                               {value.name}
+                              <p className="font-mono text-sm text-gray-500">
+                                (+ {formatCurrency(value.price)})
+                              </p>
                               {selectedSizeValues
                                 ? selectedSizeValues?.id == value.id && (
                                     <Check className="h-4 w-4" />
@@ -391,11 +400,20 @@ const ProductForm = ({ product }: Iprop) => {
                         ))
                       : "loading..."}
                   </SelectContent>
+                  <div>
+                    {selectedSizeValues ? null : (
+                      <p className="text-red-600">Size is requiered</p>
+                    )}
+                  </div>
                 </Select>
               </div>
             </div>
             {/* Submit Button */}
-            <Button className="mt-5 w-full" disabled={isLoading} type="submit">
+            <Button
+              className="mt-5 w-full"
+              disabled={isLoading || selectedSizeValues == null}
+              type="submit"
+            >
               {isLoading ? <Loader /> : "submit"}
             </Button>
           </form>

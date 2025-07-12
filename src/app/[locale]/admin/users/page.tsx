@@ -15,7 +15,9 @@ const page = async () => {
   return (
     <section className="w-full">
       <div>
-        <h2 className="text-primary text-center text-3xl font-[700]">Users</h2>
+        <h2 className="text-primary text-center text-3xl font-[700]">
+          {translate.Admin.User.title}
+        </h2>
       </div>
       <div className="mx-5">
         <DataTableUser

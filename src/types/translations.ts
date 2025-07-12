@@ -216,4 +216,66 @@ export type Translations = {
     };
     submit: string;
   };
+  Admin: {
+    User: {
+      title: string;
+      columns: string;
+      filter_emails: string;
+      table: {
+        name: string;
+        email: string;
+        role: string;
+        create: string;
+        ctr_next: string;
+        ctr_prev: string;
+        of: string;
+        row: string;
+        selected: string;
+        actions: {
+          name: string;
+          delet_user: string;
+          edit_user: string;
+        };
+      };
+    };
+    Products: {
+      title: string;
+      columns: string;
+      filter_name: string;
+      table: {
+        name: string;
+        description: string;
+        price: string;
+        create: string;
+        ctr_next: string;
+        ctr_prev: string;
+        of: string;
+        row: string;
+        selected: string;
+        actions: {
+          name: string;
+          copy_ID: string;
+          delet_product: string;
+          edit_product: string;
+        };
+      };
+    };
+    Categories: {
+      title: string;
+      Columns: {
+        name: string;
+        number_of_product: string;
+      };
+      filter_name: string;
+      table: {
+        name: string;
+        number_of_product: string;
+        actions: {
+          name: string;
+          copy_ID: string;
+          delet_category: string;
+        };
+      };
+    };
+  };
 };

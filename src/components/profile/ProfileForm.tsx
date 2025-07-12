@@ -19,7 +19,7 @@ import { Checkbox } from "../ui/checkbox";
 import { User } from "@prisma/client";
 
 interface Iprop {
-  translate: Translations["Profile"];
+  translate?: Translations["Profile"];
   initialSession?: Session | null;
   userUpdate?: User;
 }
@@ -140,15 +140,15 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
           >
             {/* Name Field */}
             <FormItem>
-              <FormLabel>{translate.form.name.label}</FormLabel>
+              <FormLabel>{translate?.form.name.label}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={translate.form.name.placeholder}
+                  placeholder={translate?.form.name.placeholder}
                   type="text"
                   {...methods.register("name", {
                     minLength: {
                       value: 3,
-                      message: translate.form.name.validation.required,
+                      message: translate?.form.name.validation.required || "",
                     },
                   })}
                 />
@@ -161,12 +161,12 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
             {/* Email Field */}
             <FormItem>
               <FormLabel>
-                {translate.form.email.label}
+                {translate?.form.email.label}
                 <span className="text-[red]">*</span>
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder={translate.form.email.placeholder}
+                  placeholder={translate?.form.email.placeholder}
                   readOnly={!handleEmailInput}
                   className={`${handleEmailInput ? "" : "input-readOnly"} `}
                   type="email"
@@ -184,15 +184,15 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
 
             {/* Phone Field */}
             <FormItem>
-              <FormLabel>{translate.form.phone.label}</FormLabel>
+              <FormLabel>{translate?.form.phone.label}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={translate.form.phone.placeholder}
+                  placeholder={translate?.form.phone.placeholder}
                   type="text"
                   {...methods.register("phone", {
                     minLength: {
                       value: 10,
-                      message: translate.form.phone.validation.invalid,
+                      message: translate?.form.phone.validation.invalid || "",
                     },
                   })}
                 />
@@ -204,15 +204,15 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
 
             {/* City Field */}
             <FormItem>
-              <FormLabel>{translate.form.city.label}</FormLabel>
+              <FormLabel>{translate?.form.city.label}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={translate.form.city.placeholder}
+                  placeholder={translate?.form.city.placeholder}
                   type="text"
                   {...methods.register("city", {
                     minLength: {
                       value: 3,
-                      message: translate.form.city.validation.required,
+                      message: translate?.form.city.validation.required || "",
                     },
                   })}
                 />
@@ -224,15 +224,16 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
 
             {/* Postal Code Fjield */}
             <FormItem>
-              <FormLabel>{translate.form.postalCode.label}</FormLabel>
+              <FormLabel>{translate?.form.postalCode.label}</FormLabel>
               <FormControl>
                 <Input
-                  placeholder={translate.form.postalCode.placeholder}
+                  placeholder={translate?.form.postalCode.placeholder}
                   type="string"
                   {...methods.register("postalCode", {
                     minLength: {
                       value: 3,
-                      message: translate.form.postalCode.validation.required,
+                      message:
+                        translate?.form.postalCode.validation.required || "",
                     },
                   })}
                 />
@@ -262,7 +263,7 @@ const ProfileForm = ({ translate, initialSession, userUpdate }: Iprop) => {
 
             {/* Submit Button */}
             <Button className="mt-5 w-full" disabled={isLoading} type="submit">
-              {isLoading ? <Loader /> : translate.submit}
+              {isLoading ? <Loader /> : translate?.submit}
             </Button>
           </form>
         </FormProvider>

@@ -58,7 +58,15 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [revalidateLoading, setRevalidateLoading] = React.useState(false);
 
-  const columns = getColumnsUsers({ locale, translate });
+  const user_types = translate.Admin.User;
+  const columns = getColumnsUsers({ locale, translate: user_types });
+
+  const columnNames = {
+    name: user_types.table.name,
+    email: user_types.table.email,
+    role: user_types.table.role,
+    createdAt: user_types.table.create,
+  };
 
   const table = useReactTable({
     data,
@@ -128,7 +136,7 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
 
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder={`${user_types.filter_emails} ...`}
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
@@ -143,7 +151,7 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
                 locale == "ar" ? "mr-auto" : "ml-auto"
               } ml-auto outline-0`}
             >
-              Columns <ChevronDown />
+              {user_types.columns} <ChevronDown />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -160,7 +168,8 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {columnNames[column.id as keyof typeof columnNames] ||
+                      column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -230,7 +239,7 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            {user_types.table.ctr_prev}
           </Button>
           <Button
             variant="outline"
@@ -238,7 +247,7 @@ export function DataTableUser({ data, locale, translate }: Iprop) {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            {user_types.table.ctr_next}
           </Button>
         </div>
       </div>
