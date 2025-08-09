@@ -101,7 +101,7 @@ const Navbar = ({ translate, initialSession }: NavbarProps) => {
 
         <Button
           onClick={toggleNav}
-          className="lg:hidden cursor-pointer rounded-full mx-3 hover:bg-primary-foreground"
+          className="lg:hidden cursor-pointer rounded-full mx-3 hover:bg-primary"
         >
           {openNav ? <X /> : <AlignJustify />}
         </Button>

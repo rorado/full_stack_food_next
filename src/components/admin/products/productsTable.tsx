@@ -98,7 +98,14 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
   const revalidePath = async () => {
     try {
       setRevalidateLoading(true);
-      await RevalidatePath(`${Routes.ADMIN}/${Pages.PRODUCTS}`);
+      const res = await RevalidatePath(`${Routes.ADMIN}/${Pages.PRODUCTS}`);
+      console.log(res);
+
+      if (res?.success) {
+        console.log("Revalidation successful!");
+      } else {
+        console.log("Revalidation failed.");
+      }
     } catch {
       alert("Enexpected Error");
     } finally {
@@ -217,7 +224,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No bults.
                 </TableCell>
               </TableRow>
             )}
