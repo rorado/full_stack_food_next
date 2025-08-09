@@ -54,7 +54,7 @@ const BestSallers = async ({ translate }: Iprop) => {
                 </h6>
               </div>
               <div className="flex flex-col gap-2 items-center">
-                <p className="text-secondary-foreground font-roboto truncate-paragraph-2 h-[52px]">
+                <p className="text-secondary-foreground font-roboto capitalize truncate-paragraph-2 max-w-30 lg:max-w-60">
                   {item.description}
                 </p>
                 <AddToCardButton
