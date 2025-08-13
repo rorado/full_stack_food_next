@@ -32,17 +32,17 @@ export function AppSidebar({ locale, translate }: Iprop) {
   const items = [
     {
       title: translate.Admin.User.title,
-      url: "/admin/users",
+      url: "admin/users",
       icon: Users,
     },
     {
       title: translate.Admin.Products.title,
-      url: "/admin/products",
+      url: "admin/products",
       icon: PackageSearch,
     },
     {
       title: translate.Admin.Categories.title,
-      url: "/admin/categories",
+      url: "admin/categories",
       icon: ChartBarStacked,
     },
     // {

@@ -35,7 +35,6 @@ const ProductForm = ({ product }: Iprop) => {
   const categoriesProduct = product?.category ?? [];
   const extrasProduct = product?.extra ?? [];
   const size = product?.size;
-
   const [image, setImage] = useState<string | undefined>(
     product?.image || undefined
   );

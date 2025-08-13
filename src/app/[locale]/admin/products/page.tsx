@@ -1,13 +1,14 @@
 import { DataTableProducts } from "@/components/admin/products/productsTable";
 import { getCurrentLocale } from "@/lib/getCurrentLocale";
 import getTrans from "@/lib/translation";
-import { getProduct } from "@/server/db/Product";
 import React from "react";
 
 const page = async () => {
-  const product = await getProduct();
   const locale = await getCurrentLocale();
   const translate = await getTrans(locale);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product`);
+  const product = await res.json();
 
   return (
     <section className="w-full">

@@ -38,9 +38,9 @@ import { ProductType } from "@/types/TypesModuls";
 import ProductForm from "./_components/formProduct";
 import { AlertDialogDemo } from "@/components/shared/Alert";
 import { productsDelet } from "@/server/_actions/admin/handleProducts";
-import { RevalidatePath } from "@/lib/revalidePath";
 import { Pages, Routes } from "@/constants/enum";
 import Loader from "@/components/ui/loader";
+import { RevalidatePath } from "@/lib/revalidePath";
 
 interface Iprop {
   data: ProductType[];
@@ -49,6 +49,7 @@ interface Iprop {
 }
 
 export function DataTableProducts({ data, locale, translate }: Iprop) {
+  const [currentData, setcurrentData] = React.useState<ProductType[]>(data);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -56,7 +57,6 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [revalidateLoading, setRevalidateLoading] = React.useState(false);
 
   const admin_product_types = translate.Admin.Products;
   const columns = getColumnsProduct({ locale, translate: admin_product_types });
@@ -67,8 +67,8 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
     price: admin_product_types.table.price,
     createdAt: admin_product_types.table.create,
   };
-  const table = useReactTable({
-    data,
+  const table = useReactTable<ProductType>({
+    data: currentData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -95,19 +95,20 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
     await productsDelet(selectedProductsId);
   };
 
-  const revalidePath = async () => {
+  const [revalidateLoading, setRevalidateLoading] = React.useState(false);
+
+  const revalidatePath = async () => {
     try {
       setRevalidateLoading(true);
-      const res = await RevalidatePath(`${Routes.ADMIN}/${Pages.PRODUCTS}`);
-      console.log(res);
-
-      if (res?.success) {
-        console.log("Revalidation successful!");
-      } else {
-        console.log("Revalidation failed.");
-      }
+      await RevalidatePath(`${Routes.ADMIN}/${Pages.PRODUCTS}`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/product`
+      );
+      const product = await res.json();
+      console.log(product);
+      setcurrentData(product);
     } catch {
-      alert("Enexpected Error");
+      alert("Unexpected Error");
     } finally {
       setRevalidateLoading(false);
     }
@@ -117,7 +118,7 @@ export function DataTableProducts({ data, locale, translate }: Iprop) {
     <div className="w-full">
       <div className="elemnts-flex gap-5 justify-between items-center">
         <div>
-          <Button onClick={revalidePath} disabled={revalidateLoading}>
+          <Button onClick={revalidatePath} disabled={revalidateLoading}>
             {revalidateLoading ? <Loader /> : <RotateCw className="w-[10px]" />}
           </Button>
         </div>
