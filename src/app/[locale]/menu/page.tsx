@@ -43,10 +43,7 @@ const Menu = async () => {
                 <div className="mt-6 flex flex-col gap-4 h-full">
                   {/* Title + Price */}
                   <div className="flex justify-between items-start">
-                    <Title
-                      title={item.name}
-                      className="text-lg md:text-xl font-bold leading-tight text-foreground group-hover:text-primary transition-colors duration-300"
-                    />
+                    <Title title={item.name} />
                     <span className="text-primary font-extrabold text-xl md:text-2xl tracking-tight drop-shadow-sm">
                       {formatCurrency(item.basePrice)}
                     </span>
